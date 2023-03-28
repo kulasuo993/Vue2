@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8"><!--  -->
+    <meta http-equiv="Cache-Control" content="max-age=-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>vue</title>
+    <style>
+        html,body{
+            background: #fff !important;
+        }
+        .box1{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        .box2{
+            width: 50px;
+            height: 50px;
+            background: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <h1>{{1 + 100}}</h1>
+        <h1>{{ 10 > 2 ? 'abc': 'hello world'}}</h1>
+
+        <hr>
+        <button v-on:click="handle">点击</button>
+        <button @click="handle">点击</button>
+        <button v-on="{click:clickMethod,mouseover:mouseoverFn}">多个事件</button>
+
+        <hr>
+        <h1 @click="sendParams(1,2)">传参</h1>
+        <h1 @click="sendParams2">不传参</h1>
+        <h1 @click="sendParams3(1,2,$event)">多个传参+事件对象</h1>
+
+        <hr>
+        <a href="https://www.baidu.com/" @click.prevent="submit">跳转百度</a>
+        <div class="box1" @click="box1Fn">
+            <div class="box2" @click.stop="box2Fn"></div>
+        </div>
+        <p>{{count}}</p>
+        <button @click.once="addFn">加1</button>
+
+        <hr>
+        <h2>input输入框</h2>
+        <input type="text" v-model="name" @blur="getData">
+        <p>{{name}}</p>
+
+        <hr>
+        <h2>radio</h2>
+        <label for="">
+            <input type="radio" value="男" v-model="sex">男
+            <input type="radio" value="女" v-model="sex">女
+        </label>
+
+
+        <hr>
+        <h2>checkbox</h2>
+            <input type="checkbox" value="篮球" name="hobby" v-model="hobbies">篮球
+            <input type="checkbox" value="足球" name="hobby" v-model="hobbies">足球
+            <input type="checkbox" value="网球" name="hobby" v-model="hobbies">网球
+
+        <hr>
+        <h2>select</h2>
+        <select name="fruit" v-model="fruit">
+            <option value="香蕉">香蕉</option>
+            <option value="苹果">苹果</option>
+            <option value="梨子">梨子</option>
+        </select> 
+
+        <select name="fruit" multiple  v-model="selectedFruit">
+            <option value="香蕉">香蕉</option>
+            <option value="苹果">苹果</option>
+            <option value="梨子">梨子</option>
+            <option value="榴莲">榴莲</option>
+        </select> 
+
+        <button @click="submitFn">提交</button>
+
+        <input type="text" v-model="age" @keyup.enter="getData2" @blur="getData2">
+
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 花扩号里面叫做配置
+        let vm = new Vue({
+            // el: '#app',
+            // 必须是一个函数
+            data(){
+                return {
+                    msg: 'hello',
+                    count: 0,
+                    name: '',
+                    sex: '',
+                    hobbies: [], // 必须是数组
+                    fruit: '',
+                    selectedFruit: [],
+                    age: ''
+                }
+            },
+            methods: {
+                handle(){
+                    console.log(this)
+                    console.log(this.msg)
+                    // this.msg = '三月'
+                    this.fn()
+                },
+                // fn(){
+                //     console.log('fn')
+                // },
+                // 方法不能写成箭头函数
+                fn: ()=>{
+                    console.log(this)
+                    this.msg = '四月'
+                },
+                clickMethod(){
+                    console.log('click')
+                },
+                mouseoverFn(){
+                    console.log('mouseover')
+                },
+                // 传参
+                sendParams(num,num2){
+                    console.log(num+ num2)
+                },
+                // 不传参,默认第一个参数是事件对象
+                sendParams2(e){
+                    console.log(e)
+                },
+                // 多传参+事件对象
+                sendParams3(num, num2, e){
+                    console.log(e.target.value)
+                },
+                submit(e){
+                    // e.preventDefault(); // 阻止默认事件
+                },
+                box1Fn(){
+                    console.log('box1')
+                },
+                box2Fn(e){
+                    // e.stopPropagation();
+                    console.log('box2')
+                },
+                addFn(){
+                    this.count++
+                },
+                getData(e){
+                    // const value = e.target.value
+                    // this.name = value
+                },
+                submitFn(){
+                    console.log(this.name)
+                    console.log(this.sex)
+                    console.log(this.hobbies)
+                    console.log(this.fruit)
+                    console.log(this.selectedFruit)
+                },
+                getData2(e){
+                    console.log(e)
+                    if(e.keyCode === 13){
+                        console.log('提交吧')
+                    }
+                }
+
+            },
+        }) 
+        // console.log(vm)
+        vm.$mount('#app')
+    </script>
+</body>
+</html>

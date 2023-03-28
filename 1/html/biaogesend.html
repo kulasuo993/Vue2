@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 1000px;
+            height: 600px;
+            border: 1px solid black;
+            position: relative;
+            margin: 50px auto 0;
+        }
+        span{
+            display: block;
+            margin-top: 10px;
+        }
+        .input1,.input2,.input3{
+            width: 900px;
+            margin-top: 15px;
+            height: 20px;
+        }
+        .btn{
+            width: 100%;
+            height: 30px;
+            margin-top: 20px;
+        }
+        .add{
+            display: block;
+            width: 200px;
+            height: 30px;
+            background-color: greenyellow;
+            float: left;
+            margin-left: 250px;
+        }
+        .reset{
+            display: block;
+            width: 200px;
+            height: 30px;
+            background-color: blue;
+            margin-left: 500px;
+        }
+        .table{
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th,td{
+            border: 1px solid #ccc;
+        }
+        th{
+            text-align: left;
+        }
+        th,td{
+            width: 180px;
+            margin-left: 60px;
+        }
+        th:nth-child(4),td:nth-child(4){
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <span class="span1">用户名</span><input type="text" placeholder="请输入用户名" class="input1" v-model="name1">
+        <span>密码</span><input type="password" placeholder="请输入密码" class="input2" v-model="password1">  
+        <span>邮箱</span><input type="text" placeholder="请输入邮箱" class="input3" v-model="postbox1">
+        <div class="btn">
+            <button class="add" @click="add">添加</button>
+            <button class="reset" @click="reset">重置</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th >编号</th>
+                    <th >姓名</th>
+                    <th >密码</th>
+                    <th >邮箱</th>
+                    <th >操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for = "(item,index) in list " >
+                    <td>{{index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.password}}</td>
+                    <td>{{item.postbox}}</td>
+                    <td>
+                        <button @click="del">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+    el:"#box",
+    data:{
+        name1 : '',
+        password1 : '',
+        postbox1 : '',
+        list:[{
+            name:'wawa',
+            password:123456,
+            postbox:'123@136.com'
+        },{
+            name:'rose',
+            password:789456,
+            postbox:'523@136.com'
+        },{
+            name:'jack',
+            password:456123,
+            postbox:'1523@136.com'
+        }]
+    },
+    methods: {
+        add(){
+            var newlist = {
+                name : this.name1,
+                password: this.password1,
+                postbox : this.postbox1,
+            }
+            this.list.push(newlist)
+            // this.name = this.password =this.postbox =''
+        },
+        reset(){
+            this.name1 = this.password1 =this.postbox1 =''
+        },
+
+        del(){
+            var index = this.list.indexOf()
+            this.list.splice(index, 1)
+        }
+    },
+    
+})
+</script>
+</html>

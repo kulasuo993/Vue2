@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-if="seen">你看的到我吗</p>
+        <hr>
+        
+        <ol>
+            <li v-for="todo in todos" v-if="todo1">{{todo.text}}</li>
+        </ol>
+        <hr>
+
+        <p>{{message}}</p>
+        <button @click="reverseMessage">反转信息</button>
+        <input type="text" v-model="message">
+        <hr>
+
+        <p>Original message: "{{ message1 }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage1}}"</p>
+        <p>Computed reversed message: "{{ reversedMessage2()}}"</p>
+        <div>{{ fullName }}</div>
+        <hr>
+
+        <div class="static" :class="{'active':isAcitive,'texte-danger':hasError}">1</div>
+        <div :class="classObject">2</div>
+        <div :class="classObject1">3</div>
+        <div :class="[activeClass,errorClass]">4</div>
+        
+        <div :class="[isAcitive ? activeClass:errorClass]">5</div>
+        <div :class="[isAcitive ? activeClass:'',errorClass]">6</div>
+        <div :class="[{active:isAcitive},errorClass]">7</div>
+        <hr>
+
+        <h1 v-if="awesome">Vue is awesome!</h1>
+        <h1 v-else>Oh no 😢</h1>
+
+        <template v-if="true">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+
+        
+
+        <template v-if="false">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </template>
+        <template v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+        </template>
+        <h1 v-show="ok">hello!</h1>
+        <hr>
+
+        <ul>
+            <li v-for="item in list">
+                {{item.message}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="(item,index) of list1"> //in 也可以用of代替
+                {{parentMessage}} - {{index}} - {{item.message}} - {{item.age}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="value in list3">
+                {{value}}
+                <br>
+                {{list3}}
+            </li>
+        </ul>
+        <hr>
+
+        <li v-for="n in evenNumbers">{{n}}</li>
+        <br>
+
+        <ul v-for="set in sets">
+            <li v-for="n in even(set)">{{n}}</li>
+        </ul>
+
+        <span v-for="n in 10">{{n+'-'}}</span>
+    
+        <ul v-if="whos.length">
+            <li v-for="who in whos">{{who.text}}</li>
+        </ul>
+        <p v-else>没有who!</p>
+    </div>
+
+    <hr>
+    <div id="app1" style="margin-top: 50px;">
+        <button @click="count ++" :disabled="count == 7">+</button>
+        <span>{{count}}</span>
+        <button @click="count --" :disabled="count == 0">-</button>
+        <br>
+        <br>
+
+        <button @click="greet">Greet</button>
+        <br>
+        <br>
+
+        <button @click="say('hi')">say hi</button>
+        <button @click="say('我很好')">say 我很好</button>
+        <br>
+        <br>
+
+        <button @click="warn('Form cannot be submitted yet.',$event)">
+            $event
+        </button>
+        <br>
+        <a  href="www.baidu.com" @click.stop="dothis">stop</a>
+        <a @click.once="dothis">once</a>
+        <br>
+        <input type="text" @keyup.enter="dothis" placeholder="回车1">
+        <input type="text" @keyup.13="dothis" placeholder="回车2">
+        <input type="text" @keyup.delete="keyDel" placeholder="delete">
+        <input type="text" @keyup.space="space" placeholder="space">
+        <input type="text" @keyup.esc="esc" placeholder="esc">
+
+        <input type="text" @keyup.alt.c="clear" placeholder="alt+c">
+        <input type="text" @keyup.ctrl.enter="ctrlEnter" placeholder="ctrl+Enter">
+        <div v-on:click.ctrl="clictrl">ctrl+点击发送</div>
+        
+        <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+        <button v-on:click.ctrl="clear">A</button>
+        <!-- 有且只有 Ctrl 被按下的时候才触发 -->
+        <button @click.ctrl.exact="clear">B</button>
+        <!-- 没有任何系统修饰符被按下的时候才触发 -->
+        <button @click.exact="clear">C</button>
+
+        <button @click.middle.exact="clear">鼠标中间点击</button>
+        <button @click.right.exact="clear">鼠标右键点击</button>
+    
+    </div>
+    <hr>
+
+    <diV id="text" style="height: 1000px;" >
+        <input type="text" v-model="message" placeholder="输入我">
+        <p>message is:{{message}}</p>
+        
+        <!-- 单个复选框，绑定到布尔值： -->
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+        <br>
+        <br>
+
+        <!-- 多个复选框，绑定到同一个数组： -->
+        <input type="checkbox" value="jack" id="jack" v-model="checknames"><label for="jack">Jack</label>
+        <input type="checkbox" value="john" id="john" v-model="checknames"><label for="john">John</label>
+        <input type="checkbox" value="mike" id="mike" v-model="checknames"><label for="mike">Mike</label>
+        <br><br>
+
+        <span>checked name:{{checknames}}</span>
+        <br><br>
+
+        <!-- 单选按钮 -->
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked:{{picked}}</span>
+        <br><br>
+
+        <!-- 选择框单选 -->
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected:{{selected}}</span>
+        <br><br>
+
+        <!-- 选择框多选 -->
+        <select name="" id="" multiple v-model="selected1">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <br>
+        <span>Selected:{{selected1}}</span>
+        <br><br>
+
+        <select v-model="selected2">
+            <option v-for="option in options" :value="option.value">
+                {{option.text}}
+            </option>
+            
+        </select>
+        <span>Selected:{{selected2}}</span>
+        <br><br>
+
+        <!-- 添加 lazy 修饰符，从而转为在 change 事件_之后_进行同步： -->
+        <input type="text" v-model.lazy="msg" placeholder="lazy">
+        <p>lazy:{{msg}}</p>
+        <br><br>
+
+        <input type="text" v-model="trim" placeholder="trim">
+        <p>trim:{{trim}}</p>
+    </diV>
+    <!-- <div id="todo-list-example"> 
+        <form :submit.prevent="addNewTodo">
+        <label for="new-todo">Add a todo</label>
+        <input type="text" v-modle="newTdoText" id="new-todo" placeholder="E.g.Feed the cat">
+        <button>Add</button>
+        </form>
+        <ul>
+            <li is="todo-item" v-for="(todo,index) in todos" :key="todo.id" :title="todo.title" @remove="todos.splice(index,1)"></li>
+            
+        </ul>
+    </div> -->
+</body>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="../js/ceshi.js"></script>
+</html>
